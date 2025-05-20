@@ -1,5 +1,5 @@
 # Makale Yazarı MVC
-Kullanıcıların kayıt olup giriş yaptıktan sonra makale oluşturabildiği, makalelere birden fazla kategori atayabildiği ve makaleler üzerinde CRUD işlemlerini gerçekleştirebildiği ASP.NET Core MVC uygulaması.
+Kullanıcıların kayıt olup giriş yaptıktan sonra makale oluşturabildiği, makalelere birden fazla kategori atayabildiği ve makaleler üzerinde CRUD işlemlerini gerçekleştirebildiği ASP.NET Core MVC uygulaması. (kullanıcı girişi, rol yönetimi, CRUD işlemleri, validasyonlar ve ilişkiler gibi yapılar entegre edilmiştir.)
 
 # Özellikler
 - Kullanıcı kimlik doğrulaması ve yetkilendirme (Identity)
