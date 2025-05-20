@@ -1,0 +1,36 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Hata";
+}
+
+<div class="container text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-danger shadow-sm">
+                <div class="card-body">
+                    <h1 class="text-danger">Hata</h1>
+                    
+                    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                    {
+                        <p class="lead my-3">@Model.ErrorMessage</p>
+                    }
+                    else
+                    {
+                        <p class="lead my-3">İşleminiz sırasında bir hata oluştu.</p>
+                    }
+
+                    @if (Model.ShowRequestId)
+                    {
+                        <p class="text-muted">
+                            <small>
+                                <strong>İstek ID:</strong> <code>@Model.RequestId</code>
+                            </small>
+                        </p>
+                    }
+                    
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-3">Ana Sayfaya Dön</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

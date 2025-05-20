@@ -1,0 +1,53 @@
+@model Sinav_Busra.Models.ViewModels.ArticleViewModel
+
+@{
+    ViewData["Title"] = "Makale Sil";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="card-title mb-0">Makale Sil</h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <h5><strong>Uyarı!</strong></h5>
+                        <p>Bu makaleyi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h4>@Model.Title</h4>
+                        
+                        <div class="text-muted mb-2">
+                            <span><i class="bi bi-calendar"></i> @Model.CreatedDate.ToString("dd.MM.yyyy HH:mm")</span>
+                        </div>
+                        
+                        @if (Model.CategoryNames.Any())
+                        {
+                            <div class="mb-3">
+                                @foreach (var categoryName in Model.CategoryNames)
+                                {
+                                    <span class="badge bg-secondary me-1">@categoryName</span>
+                                }
+                            </div>
+                        }
+                        
+                        <div class="border p-3 rounded bg-light">
+                            @(Model.Content.Length > 300 ? Model.Content.Substring(0, 300) + "..." : Model.Content)
+                        </div>
+                    </div>
+                    
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">İptal</a>
+                            <button type="submit" class="btn btn-danger">Sil</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

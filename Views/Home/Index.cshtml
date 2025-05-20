@@ -1,0 +1,92 @@
+﻿@model Sinav_Busra.Models.ViewModels.ArticleListViewModel
+
+@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<div class="container">
+    <div class="row">
+        <!-- Kategoriler -->
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Kategoriler</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <a asp-controller="Home" asp-action="Index" class="list-group-item list-group-item-action @(Model.SelectedCategoryId == null ? "active" : "")">
+                            Tümü
+                        </a>
+                        @foreach (var category in Model.Categories)
+                        {
+                            <a asp-controller="Home" asp-action="Index" asp-route-categoryId="@category.Id" 
+                               class="list-group-item list-group-item-action @(Model.SelectedCategoryId == category.Id ? "active" : "")">
+                                @category.Name
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Makaleler -->
+        <div class="col-md-9">
+            <h1 class="mb-4">Makaleler</h1>
+            
+            @if (Model.Articles.Count == 0)
+            {
+                <div class="alert alert-info">
+                    Seçili filtreye uygun makale bulunamadı.
+                </div>
+            }
+            else
+            {
+                <div class="row row-cols-1 g-4">
+                    @foreach (var article in Model.Articles)
+                    {
+                        <div class="col">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">@article.Title</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">
+                                        <i class="bi bi-person"></i> @article.AuthorName
+                                        <span class="ms-3"><i class="bi bi-calendar"></i> @article.CreatedDate.ToString("dd.MM.yyyy")</span>
+                                    </h6>
+                                    
+                                    @if (article.CategoryNames.Any())
+                                    {
+                                        <div class="mb-2">
+                                            @foreach (var categoryName in article.CategoryNames)
+                                            {
+                                                <span class="badge bg-secondary me-1">@categoryName</span>
+                                            }
+                                        </div>
+                                    }
+                                    
+                                    <p class="card-text">@(article.Content.Length > 200 ? article.Content.Substring(0, 200) + "..." : article.Content)</p>
+                                    <a asp-controller="Home" asp-action="Details" asp-route-id="@article.Id" class="btn btn-primary">Devamını Oku</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                
+                <!-- Sayfalama -->
+                @if (Model.TotalPages > 1)
+                {
+                    <nav aria-label="Sayfalama" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            @for (int i = 1; i <= Model.TotalPages; i++)
+                            {
+                                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                    <a class="page-link" asp-controller="Home" asp-action="Index" 
+                                       asp-route-page="@i" asp-route-categoryId="@Model.SelectedCategoryId">@i</a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            }
+        </div>
+    </div>
+</div>

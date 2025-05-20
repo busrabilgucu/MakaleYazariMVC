@@ -1,0 +1,66 @@
+@model Sinav_Busra.Models.ViewModels.ArticleViewModel
+
+@{
+    ViewData["Title"] = "Makale Düzenle";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-warning">
+                    <h3 class="card-title mb-0">Makale Düzenle</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Content" class="form-label"></label>
+                            <textarea asp-for="Content" class="form-control" rows="10"></textarea>
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="SelectedCategoryIds" class="form-label"></label>
+                            <div class="row">
+                                @for (int i = 0; i < Model.AvailableCategories.Count; i++)
+                                {
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" 
+                                                   name="SelectedCategoryIds" 
+                                                   id="category_@Model.AvailableCategories[i].Value" 
+                                                   value="@Model.AvailableCategories[i].Value"
+                                                   @(Model.AvailableCategories[i].Selected ? "checked" : "") />
+                                            <label class="form-check-label" for="category_@Model.AvailableCategories[i].Value">
+                                                @Model.AvailableCategories[i].Text
+                                            </label>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <span class="text-muted">En az bir kategori seçmelisiniz.</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">İptal</a>
+                            <button type="submit" class="btn btn-warning">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+} 
